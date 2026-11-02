@@ -89,6 +89,13 @@ public class Main {
     private static void registrarSolicitud() {
         System.out.println("\n--- Registrar Solicitud de Beca ---");
         String codigo = leerTexto("Código de la solicitud (ej: SOL-001): ");
+
+        // Validar primero si el código ya existe
+        if (gestor.buscarSolicitudPorCodigo(codigo) != null) {
+            System.out.println("✗ Error: Ya existe una solicitud con el código " + codigo);
+            return;
+        }
+
         String documento = leerTexto("Documento del estudiante: ");
 
         Estudiante est = gestor.buscarEstudiantePorDocumento(documento);
@@ -110,7 +117,7 @@ public class Main {
         if (gestor.registrarSolicitud(sol)) {
             System.out.println("✓ Solicitud registrada correctamente.");
         } else {
-            System.out.println("✗ Error: Código duplicado o datos inválidos.");
+            System.out.println("✗ Error: No se pudo registrar la solicitud.");
         }
     }
 
